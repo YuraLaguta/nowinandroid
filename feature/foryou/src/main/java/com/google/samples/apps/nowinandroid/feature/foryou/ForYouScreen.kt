@@ -23,6 +23,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,7 +39,6 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridCells.Adaptive
@@ -206,10 +206,11 @@ internal fun ForYouScreen(
         ) + fadeOut(),
     ) {
         val loadingContentDescription = stringResource(id = R.string.for_you_loading)
-        NiaOverlayLoadingWheel(
-            modifier = Modifier.fillMaxWidth().wrapContentSize(),
-            contentDesc = loadingContentDescription
-        )
+        Box(contentAlignment = Alignment.Center) {
+            NiaOverlayLoadingWheel(
+                contentDesc = loadingContentDescription
+            )
+        }
     }
 }
 
