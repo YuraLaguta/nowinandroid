@@ -18,8 +18,11 @@ package com.google.samples.apps.nowinandroid.feature.foryou
 
 import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -35,6 +38,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridCells.Adaptive
@@ -193,17 +197,19 @@ internal fun ForYouScreen(
     AnimatedVisibility(
         visible = isSyncing ||
             feedState is NewsFeedUiState.Loading ||
-            interestsSelectionState is ForYouInterestsSelectionUiState.Loading
+            interestsSelectionState is ForYouInterestsSelectionUiState.Loading,
+        enter = slideInVertically(
+            initialOffsetY = { fullHeight -> -fullHeight },
+        ) + fadeIn(),
+        exit = slideOutVertically(
+            targetOffsetY = { fullHeight -> -fullHeight },
+        ) + fadeOut(),
     ) {
         val loadingContentDescription = stringResource(id = R.string.for_you_loading)
-        Box(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            NiaOverlayLoadingWheel(
-                modifier = Modifier.align(Alignment.Center),
-                contentDesc = loadingContentDescription
-            )
-        }
+        NiaOverlayLoadingWheel(
+            modifier = Modifier.fillMaxWidth().wrapContentSize(),
+            contentDesc = loadingContentDescription
+        )
     }
 }
 
