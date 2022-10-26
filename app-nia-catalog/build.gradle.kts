@@ -21,7 +21,7 @@ plugins {
 android {
     defaultConfig {
         applicationId = "com.google.samples.apps.niacatalog"
-
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // The UI catalog does not depend on content from the app, however, it depends on modules
         // which do, so we must specify a default value for the contentType dimension.
         missingDimensionStrategy("contentType", "demo")
@@ -41,4 +41,6 @@ dependencies {
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.accompanist.flowlayout)
+
+    androidTestImplementation(project(":core:testing"))
 }
